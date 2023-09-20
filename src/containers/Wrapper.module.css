@@ -1,0 +1,5 @@
+.demo {
+  @mixin hover {
+    background: var(--mantine-color-navbar-box);
+  }
+}
