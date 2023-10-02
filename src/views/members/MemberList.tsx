@@ -2,21 +2,22 @@ import { useQuery } from "@tanstack/react-query"
 import { Link, useNavigate } from "react-router-dom"
 import { TeamsService } from "../../api/services"
 import { useAuthStore } from "../../stores"
-import { Table } from "@mantine/core"
+import { Button, Group, Table, TextInput } from "@mantine/core"
 import { Member } from "../../types"
+import { IconSearch } from "@tabler/icons-react"
 
 function MemberInline(props: { member: Member }) {
   const navigate = useNavigate()
 
   return (
-    <tr
+    <Table.Tr
       style={{ cursor: "pointer" }}
-      onClick={() => navigate(`/admin/users/${props.member.id}`)}
+      onClick={() => navigate(`/members/${props.member.id}`)}
     >
-      <td>{props.member.nickName}</td>
-      <td>{props.member.user?.email}</td>
-      <td>{props.member.user?.email}</td>
-    </tr>
+      <Table.Td>{props.member.nickName}</Table.Td>
+      <Table.Td>{props.member.user?.email}</Table.Td>
+      <Table.Td>{props.member.user?.email}</Table.Td>
+    </Table.Tr>
   )
 }
 
@@ -35,20 +36,25 @@ export default function MemberList() {
 
   return (
     <div>
-      <Link to="create">create member</Link>
-      <Table striped highlightOnHover withBorder>
-        <thead>
-          <tr>
-            <th>Nick Name</th>
-            <th>Role</th>
-            <th>Nick Name</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Group>
+        <TextInput leftSection={<IconSearch />} />
+        <Button component={Link} to="create">
+          Create Member
+        </Button>
+      </Group>
+      <Table striped highlightOnHover>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Nick Name</Table.Th>
+            <Table.Th>User</Table.Th>
+            <Table.Th>Nick Name</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {data?.map((u) => (
             <MemberInline key={u.id} member={u} />
           ))}
-        </tbody>
+        </Table.Tbody>
       </Table>
     </div>
   )

@@ -32,4 +32,8 @@ export class TeamsService {
   static memberList(teamsId: number) {
     return ApiService.get<Member[]>(`api/teams/${teamsId}/members/`)
   }
+
+  static getMember(memberId: number) {
+    return ApiService.get<Member>(`api/members/${memberId}`)
+  }
 }

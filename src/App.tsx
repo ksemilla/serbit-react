@@ -1,5 +1,5 @@
 import { RouterProvider } from "react-router-dom"
-import { MantineProvider, MantineThemeProvider } from "@mantine/core"
+import { MantineProvider } from "@mantine/core"
 import router from "./router"
 import { useEffect, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
@@ -20,6 +20,8 @@ function App() {
     onSuccess: (res) => {
       authStore.setIsLogged(true)
       authStore.setUserId(res.data.sub)
+    },
+    onSettled: () => {
       setLoading(false)
     },
   })

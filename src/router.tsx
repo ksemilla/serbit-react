@@ -9,6 +9,7 @@ import {
   ItemList,
   LoginPage,
   MemberCreate,
+  MemberDetail,
   MemberList,
   TeamCreate,
   TeamDetail,
@@ -35,6 +36,12 @@ const router = createBrowserRouter(
         <Route path="/members">
           <Route path="" element={<MemberList />} />
           <Route path="create" element={<MemberCreate />} />
+          <Route path=":id" element={<MemberDetail />} />
+        </Route>
+        <Route path="/items">
+          <Route path="" element={<ItemList />} />
+          {/* <Route path="create" element={<MemberCreate />} />
+          <Route path=":id" element={<MemberDetail />} /> */}
         </Route>
       </Route>
       <Route element={<AdminWrapper />}>

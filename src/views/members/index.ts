@@ -1,4 +1,5 @@
 import MemberList from "./MemberList"
 import MemberCreate from "./MemberCreate"
+import MemberDetail from "./MemberDetail"
 
-export { MemberList, MemberCreate }
+export { MemberList, MemberCreate, MemberDetail }

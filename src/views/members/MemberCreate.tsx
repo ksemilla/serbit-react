@@ -3,8 +3,9 @@ import { User } from "../../types"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { TeamsService, UsersService } from "../../api/services"
 import { useAuthStore } from "../../stores"
-import { Button, Select, TextInput } from "@mantine/core"
-import { useNavigate } from "react-router-dom"
+import { Box, Button, Group, Select, TextInput } from "@mantine/core"
+import { Link, useNavigate } from "react-router-dom"
+import { IconChevronLeft } from "@tabler/icons-react"
 
 export default function MemberCreate() {
   const authStore = useAuthStore()
@@ -19,11 +20,9 @@ export default function MemberCreate() {
 
   const mutate = useMutation({
     mutationFn: async (data: { user?: User; nickName: string }) => {
-      console.log(authStore.selectedTeamId)
       return TeamsService.addMember(authStore.selectedTeamId, data)
     },
-    onSuccess: (res) => {
-      console.log(res)
+    onSuccess: () => {
       navigate(`/members`)
     },
   })
@@ -40,8 +39,18 @@ export default function MemberCreate() {
   }
 
   return (
-    <div>
-      create member
+    <Box maw={500}>
+      <Group justify="end" mb="md">
+        <Button
+          variant="light"
+          component={Link}
+          to="/members"
+          type="button"
+          leftSection={<IconChevronLeft />}
+        >
+          Back
+        </Button>
+      </Group>
       <form onSubmit={form.onSubmit((v) => mutate.mutate(v))}>
         <TextInput
           {...form.getInputProps("nickName")}
@@ -49,6 +58,7 @@ export default function MemberCreate() {
           required
         />
         <Select
+          label="Connected User Email"
           data={users?.list.map((u) => u.email)}
           searchable
           error={form.errors.user ? "bad" : null}
@@ -59,8 +69,12 @@ export default function MemberCreate() {
             )
           }
         />
-        <Button type="submit">Create member</Button>
+        <Group justify="center" mt="lg">
+          <Button w="100%" type="submit">
+            Create member
+          </Button>
+        </Group>
       </form>
-    </div>
+    </Box>
   )
 }

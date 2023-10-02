@@ -54,7 +54,7 @@ export default function LoginPage() {
           label="Password"
           {...form.getInputProps("password")}
         />
-        <Group position="center" mt="sm">
+        <Group mt="sm">
           <Button type="submit">Login</Button>
         </Group>
       </form>
