@@ -6,6 +6,8 @@ import {
 
 import {
   Dashboard,
+  ItemCreate,
+  ItemDetail,
   ItemList,
   LoginPage,
   MemberCreate,
@@ -16,6 +18,8 @@ import {
   TeamList,
   UserDetail,
   UserList,
+  VendorCreate,
+  VendorList,
 } from "./views"
 import AuthWrapper from "./containers/AuthWrapper"
 import BaseWrapper from "./containers/BaseWrapper"
@@ -40,8 +44,13 @@ const router = createBrowserRouter(
         </Route>
         <Route path="/items">
           <Route path="" element={<ItemList />} />
-          {/* <Route path="create" element={<MemberCreate />} />
-          <Route path=":id" element={<MemberDetail />} /> */}
+          <Route path="create" element={<ItemCreate />} />
+          <Route path=":id" element={<ItemDetail />} />
+        </Route>
+        <Route path="/vendors">
+          <Route path="" element={<VendorList />} />
+          <Route path="create" element={<VendorCreate />} />
+          {/* <Route path=":id" element={<ItemDetail />} /> */}
         </Route>
       </Route>
       <Route element={<AdminWrapper />}>

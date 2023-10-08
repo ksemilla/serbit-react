@@ -15,9 +15,9 @@ export class UsersService {
   }
 
   static createUser(data: { email: string; password: string }) {
-    return ApiService.post<
-      { email: string; password: string },
-      { id: number; accessToken: string }
-    >(`api/users/`, data)
+    return ApiService.post<{ id: number; accessToken: string }>(
+      `api/users/`,
+      data
+    )
   }
 }

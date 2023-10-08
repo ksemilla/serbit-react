@@ -51,7 +51,7 @@ export default function MemberList() {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {data?.map((u) => (
+          {data?.list.map((u) => (
             <MemberInline key={u.id} member={u} />
           ))}
         </Table.Tbody>

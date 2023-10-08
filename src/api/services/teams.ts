@@ -1,5 +1,5 @@
 import { ApiService } from "."
-import { Member, Team, User } from "../../types"
+import { Item, ListResult, Member, Team, User, Vendor } from "../../types"
 
 export class TeamsService {
   static getTeamList() {
@@ -15,7 +15,7 @@ export class TeamsService {
   // }
 
   static createTeam(data: { name: string }) {
-    return ApiService.post<{ name: string }, { id: number }>(`api/teams/`, data)
+    return ApiService.post<{ id: number }>(`api/teams/`, data)
   }
 
   static deleteTeam(id: number) {
@@ -23,17 +23,38 @@ export class TeamsService {
   }
 
   static addMember(teamsId: number, data: { user?: User; nickName: string }) {
-    return ApiService.post<{ user?: User; nickName: string }, any>(
-      `api/teams/${teamsId}/members/`,
-      data
-    )
+    return ApiService.post<any>(`api/teams/${teamsId}/members/`, data)
   }
 
   static memberList(teamsId: number) {
-    return ApiService.get<Member[]>(`api/teams/${teamsId}/members/`)
+    return ApiService.get<ListResult<Member>>(`api/teams/${teamsId}/members/`)
   }
 
   static getMember(memberId: number) {
     return ApiService.get<Member>(`api/members/${memberId}`)
+  }
+
+  static getItemList(teamsId: number) {
+    return ApiService.get<ListResult<Item>>(`api/teams/${teamsId}/items/`)
+  }
+
+  static createItem(teamsId: number, data: Item) {
+    return ApiService.post<Item>(`api/teams/${teamsId}/items/`, data)
+  }
+
+  static getItem(teamsId: number, itemId: number) {
+    return ApiService.get<Item>(`api/teams/${teamsId}/items/${itemId}`)
+  }
+
+  static updateItem(teamsId: number, itemId: number, data: Item) {
+    return ApiService.put<any>(`api/teams/${teamsId}/items/${itemId}`, data)
+  }
+
+  static getVendorList(teamsId: number) {
+    return ApiService.get<ListResult<Vendor>>(`api/teams/${teamsId}/vendors/`)
+  }
+
+  static createVendor(teamsId: number, data: Vendor) {
+    return ApiService.post<any>(`api/teams/${teamsId}/vendors/`, data)
   }
 }

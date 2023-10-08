@@ -1,45 +1,46 @@
 import { useQuery } from "@tanstack/react-query"
-import { Link, useNavigate } from "react-router-dom"
-import { TeamsService } from "../../api/services"
 import { useAuthStore } from "../../stores"
+import { TeamsService } from "../../api/services"
+import { Vendor } from "../../types"
+import { Link, useNavigate } from "react-router-dom"
 import { Button, Group, Table, TextInput } from "@mantine/core"
-import { Item } from "../../types"
 import { IconSearch } from "@tabler/icons-react"
 
-function ItemInline(props: { item: Item }) {
+function VendorInline(props: { vendor: Vendor }) {
   const navigate = useNavigate()
 
   return (
     <Table.Tr
       style={{ cursor: "pointer" }}
-      onClick={() => navigate(`/items/${props.item.id}`)}
+      onClick={() => navigate(`/vendors/${props.vendor.id}`)}
     >
-      <Table.Td>{props.item.partNumber}</Table.Td>
-      <Table.Td>{props.item.name}</Table.Td>
-      <Table.Td>{props.item.sellPrice}</Table.Td>
+      <Table.Td>{props.vendor.id}</Table.Td>
+      <Table.Td>{props.vendor.name}</Table.Td>
+      <Table.Td>{props.vendor.isActive}</Table.Td>
     </Table.Tr>
   )
 }
 
-export default function ItemList() {
+export default function VendorList() {
   const authStore = useAuthStore()
-
   const { data } = useQuery({
-    queryKey: ["items"],
+    queryKey: ["teams", authStore.selectedTeamId, "vendors"],
     queryFn: async () => {
-      return TeamsService.getItemList(authStore.selectedTeamId).then(
+      return TeamsService.getVendorList(authStore.selectedTeamId).then(
         (res) => res.data
       )
     },
     enabled: !!authStore.selectedTeamId,
   })
 
+  console.log(data)
+
   return (
     <div>
       <Group>
         <TextInput leftSection={<IconSearch />} />
         <Button component={Link} to="create">
-          Create Item
+          Create Vendor
         </Button>
       </Group>
       <Table striped highlightOnHover>
@@ -52,7 +53,7 @@ export default function ItemList() {
         </Table.Thead>
         <Table.Tbody>
           {data?.list.map((u) => (
-            <ItemInline key={u.id} item={u} />
+            <VendorInline key={u.id} vendor={u} />
           ))}
         </Table.Tbody>
       </Table>

@@ -12,7 +12,7 @@ import {
   rem,
   useMantineColorScheme,
 } from "@mantine/core"
-import { Link, Outlet } from "react-router-dom"
+import { Link, Outlet, useLocation } from "react-router-dom"
 import {
   Icon123,
   IconChalkboard,
@@ -48,7 +48,11 @@ const navigation: { icon: React.ReactNode; label: string; path: string }[] = [
     label: "Payouts",
     path: "/payouts",
   },
-
+  {
+    icon: <Icon123 size="1rem" />,
+    label: "Vendors",
+    path: "/vendors",
+  },
   {
     icon: <Icon123 size="1rem" />,
     label: "Members",
@@ -60,6 +64,7 @@ export default function BaseWrapper() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme()
   const dark = colorScheme === "dark"
   const authStore = useAuthStore()
+  const resource = useLocation().pathname.split("/")[1]
 
   const [opened] = useDisclosure()
   return (
@@ -126,6 +131,12 @@ export default function BaseWrapper() {
                   borderRadius: theme.radius.sm,
                   color:
                     colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+                  backgroundColor:
+                    `/${resource}` === nav.path
+                      ? colorScheme === "dark"
+                        ? theme.colors.gray[9]
+                        : theme.colors.gray[2]
+                      : "",
                 })}
                 className={classes.demo}
               >
@@ -158,13 +169,6 @@ export default function BaseWrapper() {
                 borderRadius: theme.radius.sm,
                 color:
                   colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-
-                "&:hover": {
-                  backgroundColor:
-                    colorScheme === "dark"
-                      ? theme.colors.dark[6]
-                      : theme.colors.gray[0],
-                },
               })}
             >
               <Group>
@@ -176,7 +180,7 @@ export default function BaseWrapper() {
                   <Text size="sm" fw={500}>
                     Amy Horsefighter
                   </Text>
-                  <Text color="dimmed" size="xs" truncate>
+                  <Text size="xs" truncate>
                     {authStore.user?.email}
                   </Text>
                 </Box>
@@ -185,8 +189,10 @@ export default function BaseWrapper() {
           </Box>
         </AppShell.Section>
       </AppShell.Navbar>
-      <AppShell.Main bg="dark">
-        <Outlet />
+      <AppShell.Main>
+        <ScrollArea.Autosize mah="calc(100vh - 84px)">
+          <Outlet />
+        </ScrollArea.Autosize>
       </AppShell.Main>
     </AppShell>
   )

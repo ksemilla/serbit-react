@@ -12,12 +12,12 @@ export class ApiService {
     })
   }
 
-  static post<DataType, ResponseType>(
+  static post<ResponseType>(
     path: string,
-    data: DataType,
+    data: any,
     config?: AxiosRequestConfig<any>
   ) {
-    return axios.post<DataType, AxiosResponse<ResponseType>>(
+    return axios.post<any, AxiosResponse<ResponseType>>(
       `${API_URL}/${path}`,
       data,
       {
@@ -29,12 +29,12 @@ export class ApiService {
     )
   }
 
-  static put<DataType, ResponseType>(
+  static put<ResponseType>(
     path: string,
-    data: DataType,
+    data: any,
     config?: AxiosRequestConfig<any>
   ) {
-    return axios.put<DataType, AxiosResponse<ResponseType>>(
+    return axios.put<any, AxiosResponse<ResponseType>>(
       `${API_URL}/${path}`,
       data,
       {
