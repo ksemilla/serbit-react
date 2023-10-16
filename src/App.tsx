@@ -7,6 +7,8 @@ import { AuthService } from "./api/services"
 import { VerifyToken } from "./types"
 import { useAuthStore } from "./stores"
 import { resolver } from "./themeResolvers"
+import { Notifications } from "@mantine/notifications"
+import "@mantine/notifications/styles.css"
 
 function App() {
   const authStore = useAuthStore()
@@ -36,6 +38,7 @@ function App() {
 
   return (
     <MantineProvider defaultColorScheme="dark" cssVariablesResolver={resolver}>
+      <Notifications />
       {loading ? <div>Loading...</div> : <RouterProvider router={router} />}
     </MantineProvider>
   )

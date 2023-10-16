@@ -9,11 +9,6 @@ interface AuthState {
   userId: number
   setUserId: (id: number) => void
   logout: () => void
-
-  selectedTeamId: number
-  setSelectedTeamId: (id: number) => void
-  selectedTeam: Team | null
-  setSelectedTeam: (t: Team | null) => void
 }
 
 export const useAuthStore = create<AuthState>()((set) => ({
@@ -26,11 +21,4 @@ export const useAuthStore = create<AuthState>()((set) => ({
 
   logout: () =>
     set((state) => ({ ...state, user: null, userId: 0, isLogged: false })),
-
-  selectedTeamId: 0,
-  setSelectedTeamId: (id) => set((state) => ({ ...state, selectedTeamId: id })),
-
-  selectedTeam: null,
-  setSelectedTeam: (selectedTeam) =>
-    set((state) => ({ ...state, selectedTeam })),
 }))

@@ -1,10 +1,8 @@
-import { useQuery } from "@tanstack/react-query"
-import { useAuthStore } from "../../stores"
-import { TeamsService } from "../../api/services"
 import { Vendor } from "../../types"
 import { Link, useNavigate } from "react-router-dom"
 import { Button, Group, Table, TextInput } from "@mantine/core"
 import { IconSearch } from "@tabler/icons-react"
+import { useTeamVendorList } from "../../hooks"
 
 function VendorInline(props: { vendor: Vendor }) {
   const navigate = useNavigate()
@@ -22,18 +20,7 @@ function VendorInline(props: { vendor: Vendor }) {
 }
 
 export default function VendorList() {
-  const authStore = useAuthStore()
-  const { data } = useQuery({
-    queryKey: ["teams", authStore.selectedTeamId, "vendors"],
-    queryFn: async () => {
-      return TeamsService.getVendorList(authStore.selectedTeamId).then(
-        (res) => res.data
-      )
-    },
-    enabled: !!authStore.selectedTeamId,
-  })
-
-  console.log(data)
+  const { vendors } = useTeamVendorList()
 
   return (
     <div>
@@ -52,7 +39,7 @@ export default function VendorList() {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {data?.list.map((u) => (
+          {vendors?.list.map((u) => (
             <VendorInline key={u.id} vendor={u} />
           ))}
         </Table.Tbody>

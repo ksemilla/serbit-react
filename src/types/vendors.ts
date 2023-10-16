@@ -4,6 +4,10 @@ export interface Vendor {
   id?: number
   team: Team
   name: string
+  mobile?: string
+  phone?: string
+  email?: string
+  notes?: string
   isActive: boolean
   vendorContacts: VendorContact[]
   pricingList: VendorPricing[]

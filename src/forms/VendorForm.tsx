@@ -106,6 +106,10 @@ export default function VendorForm(props: {
   const form = useForm({
     initialValues: props.initialValues ?? {
       name: "",
+      email: "",
+      mobile: "",
+      phone: "",
+      notes: "",
       team: {
         name: "",
         slug: "",
@@ -148,7 +152,11 @@ export default function VendorForm(props: {
               <Title order={2}>
                 {props.initialValues?.id ? "Edit vendor" : "Create Vendor"}
               </Title>
-              <Button type="submit" disabled={!form.isDirty()}>
+              <Button
+                type="submit"
+                loading={props.loading}
+                disabled={!form.isDirty()}
+              >
                 Submit
               </Button>
             </Flex>
@@ -160,19 +168,36 @@ export default function VendorForm(props: {
                 {...form.getInputProps("name")}
                 w="100%"
               />
-              <Box>
-                <Text fw={700} size="sm">
-                  Is active?
-                </Text>
-                <Switch
-                  size="xl"
-                  disabled={!props.initialValues}
-                  onLabel="Yes"
-                  offLabel="No"
-                  {...form.getInputProps(`isActive`, { type: "checkbox" })}
-                />
-              </Box>
+              <TextInput
+                label="Email"
+                {...form.getInputProps("email")}
+                w="100%"
+              />
+              {props.initialValues && (
+                <Box>
+                  <Text fw={700} size="sm">
+                    Is active?
+                  </Text>
+                  <Switch
+                    size="xl"
+                    disabled={!props.initialValues}
+                    onLabel="Yes"
+                    offLabel="No"
+                    {...form.getInputProps(`isActive`, { type: "checkbox" })}
+                  />
+                </Box>
+              )}
             </Flex>
+            <SimpleGrid cols={{ sm: 2 }}>
+              <TextInput label="Mobile" {...form.getInputProps("mobile")} />
+              <TextInput label="Phone" {...form.getInputProps("phone")} />
+            </SimpleGrid>
+            <Textarea
+              label="Notes"
+              {...form.getInputProps("notes")}
+              autosize
+              minRows={3}
+            />
           </Fieldset>
           <Fieldset legend="Contacts">
             <Stack gap={10}>
