@@ -27,7 +27,7 @@ export function useTeamVendorCreate() {
     mutationFn: async (data: Vendor) =>
       teamClient.createVendor(data).then((res) => res.data),
     onSuccess: (vendor) => {
-      navigate(`vendors/${vendor.id}`)
+      navigate(`/vendors/${vendor.id}`)
     },
   })
   return mutate.mutate

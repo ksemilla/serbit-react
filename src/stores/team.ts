@@ -10,7 +10,8 @@ interface TeamState {
   setSelectedTeam: (t: Team | null) => void
 
   getVendorList: () => Promise<AxiosResponse<ListResult<Vendor>, any>>
-
+  getVendor: (id: number) => Promise<AxiosResponse<Vendor, any>>
+  updateVendor: (data: Vendor) => Promise<AxiosResponse<Vendor, any>>
   createVendor: (data: Vendor) => Promise<AxiosResponse<Vendor, any>>
 }
 
@@ -27,11 +28,23 @@ export const useTeamClient = create<TeamState>()((set, get) => ({
       `api/teams/${get().selectedTeamId}/vendors/`
     ),
 
+  getVendor: (id: number) =>
+    ApiService.get<Vendor>(`api/teams/${get().selectedTeamId}/vendors/${id}`),
+
   createVendor: (data) => {
     const selectedTeam = get().selectedTeam
     if (selectedTeam) data.team = selectedTeam
     return ApiService.post<Vendor>(
       `api/teams/${get().selectedTeamId}/vendors/`,
+      data
+    )
+  },
+
+  updateVendor: (data) => {
+    const selectedTeam = get().selectedTeam
+    if (selectedTeam) data.team = selectedTeam
+    return ApiService.put<Vendor>(
+      `api/teams/${get().selectedTeamId}/vendors/${data.id}`,
       data
     )
   },

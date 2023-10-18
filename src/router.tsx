@@ -19,6 +19,7 @@ import {
   UserDetail,
   UserList,
   VendorCreate,
+  VendorEdit,
   VendorList,
 } from "./views"
 import AuthWrapper from "./containers/AuthWrapper"
@@ -50,7 +51,7 @@ const router = createBrowserRouter(
         <Route path="/vendors">
           <Route path="" element={<VendorList />} />
           <Route path="create" element={<VendorCreate />} />
-          {/* <Route path=":id" element={<ItemDetail />} /> */}
+          <Route path=":id" element={<VendorEdit />} />
         </Route>
       </Route>
       <Route element={<AdminWrapper />}>

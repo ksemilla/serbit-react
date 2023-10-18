@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { Team, User } from "../types"
+import { User } from "../types"
 
 interface AuthState {
   isLogged: boolean
